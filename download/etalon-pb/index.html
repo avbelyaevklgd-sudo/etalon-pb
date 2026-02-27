@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Эталон-ПБ - Инновации в промышленной безопасности">
+    <title>ЭТАЛОН-ПБ | Промышленная безопасность</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --emerald-50: #ecfdf5;
+            --emerald-100: #d1fae5;
+            --emerald-200: #a7f3d0;
+            --emerald-300: #6ee7b7;
+            --emerald-400: #34d399;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --emerald-700: #047857;
+            --emerald-800: #065f46;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            color: var(--gray-900);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+        }
+
+        /* Golden Ratio Grid Lines (decorative) */
+        .golden-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+        }
+
+        .golden-grid .vertical-line {
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: var(--gray-900);
+        }
+
+        .golden-grid .vertical-line:nth-child(1) {
+            left: 38.2%;
+        }
+
+        .golden-grid .vertical-line:nth-child(2) {
+            left: 61.8%;
+        }
+
+        .golden-grid .horizontal-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gray-900);
+        }
+
+        .golden-grid .horizontal-line:nth-child(3) {
+            top: 38.2%;
+        }
+
+        .golden-grid .horizontal-line:nth-child(4) {
+            top: 61.8%;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-900);
+            letter-spacing: -0.025em;
+        }
+
+        /* Navigation */
+        .nav-desktop {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-desktop {
+                display: flex;
+                align-items: center;
+                gap: 32px;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-decoration: none;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--emerald-500);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--emerald-600);
+        }
+
+        .nav-link.active {
+            color: var(--emerald-600);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: block;
+            padding: 8px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--gray-50);
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
+            color: var(--gray-700);
+        }
+
+        /* Mobile Navigation */
+        .nav-mobile {
+            display: none;
+            padding: 16px 0;
+            border-top: 1px solid var(--gray-100);
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .nav-mobile.open {
+            display: block;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-mobile {
+                display: none !important;
+            }
+        }
+
+        .nav-mobile a {
+            display: block;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-mobile a:hover {
+            color: var(--emerald-600);
+            background: var(--gray-50);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 6rem 2rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .hero {
+                margin-bottom: 7rem;
+            }
+        }
+
+        .hero-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 2.25rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-500);
+            max-width: 32rem;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .services-grid {
+                margin-bottom: 7rem;
+            }
+        }
+
+        /* Service Card */
+        .service-card {
+            background: #FFFFFF;
+            border: 1px solid var(--gray-100);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @media (min-width: 768px) {
+            .service-card {
+                padding: 2.5rem;
+            }
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--emerald-500), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            border-color: var(--emerald-500);
+            box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--emerald-500) 0%, var(--emerald-600) 100%);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+            margin: 0 auto 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .icon-container {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(16, 185, 129, 0.35);
+        }
+
+        .service-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .service-card h3 {
+                font-size: 1.25rem;
+            }
+        }
+
+        .service-card p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* Digital Platform Section */
+        .digital-platform {
+            background: linear-gradient(135deg, var(--gray-50) 0%, #f1f5f9 100%);
+            border: 1px solid var(--gray-200);
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            transition: all 0.4s ease;
+        }
+
+        .digital-platform:hover {
+            box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.15);
+        }
+
+        .digital-platform-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 768px) {
+            .digital-platform-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .digital-platform-content {
+            padding: 2rem;
+            order: 2;
+        }
+
+        @media (min-width: 768px) {
+            .digital-platform-content {
+                padding: 3rem;
+                order: 1;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--emerald-700);
+            background: var(--emerald-50);
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .digital-platform h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .digital-platform h2 {
+                font-size: 1.875rem;
+            }
+        }
+
+        .digital-platform .highlight {
+            font-size: 1.125rem;
+            color: var(--emerald-600);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .digital-platform .description {
+            color: var(--gray-500);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #FFFFFF;
+            background: linear-gradient(135deg, var(--emerald-500) 0%, var(--emerald-600) 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--emerald-600) 0%, var(--emerald-700) 100%);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .digital-platform-image {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            order: 1;
+        }
+
+        @media (min-width: 768px) {
+            .digital-platform-image {
+                order: 2;
+            }
+        }
+
+        .digital-platform-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .digital-platform:hover .digital-platform-image img {
+            transform: scale(1.05);
+        }
+
+        /* Visual Cards */
+        .visual-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .visual-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .visual-card {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .visual-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .visual-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .visual-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .visual-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+            pointer-events: none;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 10;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-container {
+                padding: 4rem 2rem;
+            }
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .footer-logo span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .footer-contacts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        @media (min-width: 768px) {
+            .footer-contacts {
+                flex-direction: row;
+                gap: 2rem;
+            }
+        }
+
+        .footer-contacts a {
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-contacts a:hover {
+            color: var(--emerald-600);
+        }
+
+        .footer-privacy {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color 0.2s;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-privacy {
+                text-align: right;
+            }
+        }
+
+        .footer-privacy:hover {
+            color: var(--emerald-600);
+        }
+
+        .footer-copyright {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-50);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--gray-900);
+        }
+
+        /* Focus States */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--emerald-500);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Golden Ratio Grid (decorative) -->
+    <div class="golden-grid">
+        <div class="vertical-line"></div>
+        <div class="vertical-line"></div>
+        <div class="horizontal-line"></div>
+        <div class="horizontal-line"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <img src="images/logo.jpg" alt="Эталон-ПБ">
+                    <span class="logo-text">ЭТАЛОН-ПБ</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-desktop">
+                    <a href="#about" class="nav-link active">О нас</a>
+                    <a href="#supervising" class="nav-link">Супервайзинг</a>
+                    <a href="#audit" class="nav-link">Аудит</a>
+                    <a href="#support" class="nav-link">Сопровождение</a>
+                    <a href="#training" class="nav-link">Обучение</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Открыть меню">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" id="menuIcon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <nav class="nav-mobile" id="mobileNav">
+                <a href="#about">О нас</a>
+                <a href="#supervising">Супервайзинг</a>
+                <a href="#audit">Аудит</a>
+                <a href="#support">Сопровождение</a>
+                <a href="#training">Обучение</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="hero">
+                <h1 class="hero-title">ИННОВАЦИИ В БЕЗОПАСНОСТИ</h1>
+                <p class="hero-subtitle">Ваше спокойствие — наша работа</p>
+            </div>
+
+            <!-- Services Section -->
+            <section class="services-grid">
+                <!-- Card 1 - Документация -->
+                <div class="service-card">
+                    <div class="icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 2V8H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 13H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 17H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 9H9H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Документация</h3>
+                    <p>Разработка и экспертиза документации по промышленной безопасности</p>
+                </div>
+
+                <!-- Card 2 - Построение системы -->
+                <div class="service-card">
+                    <div class="icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.579 9.96512 20.258 9.77251 19.9887C9.5799 19.7194 9.31074 19.5143 9 19.4C8.69838 19.2669 8.36381 19.2272 8.03941 19.286C7.71502 19.3448 7.41568 19.4995 7.18 19.73L7.12 19.79C6.93425 19.976 6.71368 20.1235 6.47088 20.2241C6.22808 20.3248 5.96783 20.3766 5.705 20.3766C5.44217 20.3766 5.18192 20.3248 4.93912 20.2241C4.69632 20.1235 4.47575 19.976 4.29 19.79C4.10405 19.6043 3.95653 19.3837 3.85588 19.1409C3.75523 18.8981 3.70343 18.6378 3.70343 18.375C3.70343 18.1122 3.75523 17.8519 3.85588 17.6091C3.95653 17.3663 4.10405 17.1457 4.29 16.96L4.35 16.9C4.58054 16.6643 4.73519 16.365 4.794 16.0406C4.85282 15.7162 4.81312 15.3816 4.68 15.08C4.55324 14.7842 4.34276 14.532 4.07447 14.3543C3.80618 14.1766 3.49179 14.0813 3.17 14.08H3C2.46957 14.08 1.96086 13.8693 1.58579 13.4942C1.21071 13.1191 1 12.6104 1 12.08C1 11.5496 1.21071 11.0409 1.58579 10.6658C1.96086 10.2907 2.46957 10.08 3 10.08H3.09C3.42099 10.0723 3.742 9.96512 4.0113 9.77251C4.28059 9.5799 4.48572 9.31074 4.6 9C4.73312 8.69838 4.77282 8.36381 4.714 8.03941C4.65519 7.71502 4.50054 7.41568 4.27 7.18L4.21 7.12C4.02405 6.93425 3.87653 6.71368 3.77588 6.47088C3.67523 6.22808 3.62343 5.96783 3.62343 5.705C3.62343 5.44217 3.67523 5.18192 3.77588 4.93912C3.87653 4.69632 4.02405 4.47575 4.21 4.29C4.39575 4.10405 4.61632 3.95653 4.85912 3.85588C5.10192 3.75523 5.36217 3.70343 5.625 3.70343C5.88783 3.70343 6.14808 3.75523 6.39088 3.85588C6.63368 3.95653 6.85425 4.10405 7.04 4.29L7.1 4.35C7.33568 4.58054 7.63502 4.73519 7.95941 4.794C8.28381 4.85282 8.61838 4.81312 8.92 4.68H9C9.29577 4.55324 9.54802 4.34276 9.72569 4.07447C9.90337 3.80618 9.99872 3.49179 10 3.17V3C10 2.46957 10.2107 1.96086 10.5858 1.58579C10.9609 1.21071 11.4696 1 12 1C12.5304 1 13.0391 1.21071 13.4142 1.58579C13.7893 1.96086 14 2.46957 14 3V3.09C14.0013 3.41179 14.0966 3.72618 14.2743 3.99447C14.452 4.26276 14.7042 4.47324 15 4.6C15.3016 4.73312 15.6362 4.77282 15.9606 4.714C16.285 4.65519 16.5843 4.50054 16.82 4.27L16.88 4.21C17.0657 4.02405 17.2863 3.87653 17.5291 3.77588C17.7719 3.67523 18.0322 3.62343 18.295 3.62343C18.5578 3.62343 18.8181 3.67523 19.0609 3.77588C19.3037 3.87653 19.5243 4.02405 19.71 4.21C19.896 4.39575 20.0435 4.61632 20.1441 4.85912C20.2448 5.10192 20.2966 5.36217 20.2966 5.625C20.2966 5.88783 20.2448 6.14808 20.1441 6.39088C20.0435 6.63368 19.896 6.85425 19.71 7.04L19.65 7.1C19.4195 7.33568 19.2648 7.63502 19.206 7.95941C19.1472 8.28381 19.1869 8.61838 19.32 8.92V9C19.4468 9.29577 19.6572 9.54802 19.9255 9.72569C20.1938 9.90337 20.5082 9.99872 20.83 10H21C21.5304 10 22.0391 10.2107 22.4142 10.5858C22.7893 10.9609 23 11.4696 23 12C23 12.5304 22.7893 13.0391 22.4142 13.4142C22.0391 13.7893 21.5304 14 21 14H20.91C20.5882 14.0013 20.2738 14.0966 20.0055 14.2743C19.7372 14.452 19.5268 14.7042 19.4 15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Построение системы</h3>
+                    <p>Создание эффективной системы управления промышленной безопасностью</p>
+                </div>
+
+                <!-- Card 3 - Дистанционный контроль -->
+                <div class="service-card">
+                    <div class="icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 8V12L15 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Дистанционный контроль</h3>
+                    <p>Мониторинг и контроль безопасности в режиме реального времени</p>
+                </div>
+            </section>
+
+            <!-- Digital Platform Section -->
+            <section class="digital-platform">
+                <div class="digital-platform-grid">
+                    <div class="digital-platform-content">
+                        <span class="badge">ИННОВАЦИИ</span>
+                        <h2>Цифровой кодекс</h2>
+                        <p class="highlight">ИИ-платформа управления безопасностью</p>
+                        <p class="description">
+                            Инновационная цифровая платформа на базе искусственного интеллекта для комплексного управления промышленной безопасностью. Анализ рисков, прогнозирование инцидентов и автоматизация процессов контроля в единой экосистеме.
+                        </p>
+                        <a href="#platform" class="btn-primary">
+                            Подробнее
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="digital-platform-image">
+                        <img src="images/1.png" alt="Цифровой кодекс: ИИ-платформа">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visual Cards -->
+            <section class="visual-grid">
+                <div class="visual-card">
+                    <img src="images/4.png" alt="Профессионалы">
+                </div>
+                <div class="visual-card">
+                    <img src="images/5.png" alt="Цифровые решения">
+                </div>
+                <div class="visual-card">
+                    <img src="images/3.png" alt="Инфраструктура">
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo and Company Name -->
+                <div class="footer-logo">
+                    <img src="images/logo.jpg" alt="Эталон-ПБ">
+                    <span>ЭТАЛОН-ПБ</span>
+                </div>
+
+                <!-- Contacts -->
+                <div class="footer-contacts">
+                    <a href="tel:+78001234567">+7 (800) 123-45-67</a>
+                    <a href="mailto:info@etalon-pb.ru">info@etalon-pb.ru</a>
+                </div>
+
+                <!-- Privacy Policy -->
+                <a href="#privacy" class="footer-privacy">Политика конфиденциальности</a>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-copyright">
+                © 2025 Эталон-ПБ. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const menuIcon = document.getElementById('menuIcon');
+            let isOpen = false;
+
+            mobileMenuBtn.addEventListener('click', function() {
+                isOpen = !isOpen;
+                
+                if (isOpen) {
+                    mobileNav.classList.add('open');
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                } else {
+                    mobileNav.classList.remove('open');
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileNav.querySelectorAll('a');
+            mobileLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    isOpen = false;
+                    mobileNav.classList.remove('open');
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

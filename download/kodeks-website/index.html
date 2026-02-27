@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Кодекс Безопасности - Инновации в безопасности">
+    <title>КОДЕКС БЕЗОПАСНОСТИ</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --kb-dark-blue: #0a1628;
+            --kb-ice-blue: #1e3a5f;
+            --kb-silver: #c0c8d4;
+            --kb-glass: rgba(255, 255, 255, 0.1);
+            --kb-glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Fixed Background */
+        .fixed-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: url('images/background.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .fixed-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(10, 22, 40, 0.6) 0%, 
+                rgba(10, 22, 40, 0.4) 50%, 
+                rgba(10, 22, 40, 0.7) 100%);
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        @media (min-width: 768px) {
+            .header-content {
+                height: 80px;
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        @media (min-width: 768px) {
+            .logo img {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--kb-dark-blue);
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .logo-text {
+                font-size: 18px;
+            }
+        }
+
+        /* Navigation */
+        .nav-desktop {
+            display: none;
+        }
+
+        @media (min-width: 1280px) {
+            .nav-desktop {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 11px;
+            font-weight: 500;
+            color: #4b5563;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #3b82f6;
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-link.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: block;
+            padding: 8px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-btn:hover {
+            background: #f3f4f6;
+        }
+
+        @media (min-width: 1280px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
+            color: #4b5563;
+        }
+
+        /* Mobile Navigation */
+        .nav-mobile {
+            display: none;
+            padding: 16px 0;
+            border-top: 1px solid #f3f4f6;
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .nav-mobile.open {
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .nav-mobile {
+                display: none !important;
+            }
+        }
+
+        .nav-mobile a {
+            display: block;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .nav-mobile a:hover {
+            background: #f9fafb;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        /* Hero Title */
+        .hero-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 1.875rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 2.25rem;
+                margin-bottom: 3rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Card Base */
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Image Card */
+        .image-card {
+            position: relative;
+            aspect-ratio: 4/3;
+        }
+
+        .image-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card:hover .image-card img {
+            transform: scale(1.1);
+        }
+
+        .image-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+            pointer-events: none;
+        }
+
+        /* Service Card */
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .service-card {
+                padding: 2.5rem;
+            }
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .icon-container {
+            transform: scale(1.1);
+        }
+
+        .service-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--kb-dark-blue);
+        }
+
+        @media (min-width: 768px) {
+            .service-card h3 {
+                font-size: 1.125rem;
+            }
+        }
+
+        /* Dark Card */
+        .dark-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-card-wide {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .dark-card-wide {
+                flex-direction: row;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .dark-card-wide {
+                grid-column: span 2;
+            }
+        }
+
+        .dark-card-wide .image-section {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .dark-card-wide .image-section {
+                width: 50%;
+                aspect-ratio: auto;
+            }
+        }
+
+        .dark-card-wide .image-section img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .dark-card-wide:hover .image-section img {
+            transform: scale(1.1);
+        }
+
+        .dark-card-wide .content-section {
+            width: 100%;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .dark-card-wide .content-section {
+                width: 50%;
+                padding: 2rem;
+            }
+        }
+
+        .dark-card-wide h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .dark-card-wide h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .dark-card-wide p {
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        @media (min-width: 768px) {
+            .dark-card-wide p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Digital Codex Card */
+        .digital-codex-card {
+            position: relative;
+        }
+
+        .digital-codex-card .image-container {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        .digital-codex-card .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .digital-codex-card:hover .image-container img {
+            transform: scale(1.1);
+        }
+
+        .digital-codex-card .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3), transparent);
+            pointer-events: none;
+        }
+
+        .digital-codex-card .content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+        }
+
+        .digital-codex-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        @media (min-width: 768px) {
+            .digital-codex-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .digital-codex-card p {
+            font-size: 0.875rem;
+            color: #d1d5db;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 10;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-container {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .footer-logo span {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .footer-contacts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        @media (min-width: 768px) {
+            .footer-contacts {
+                flex-direction: row;
+                gap: 2rem;
+            }
+        }
+
+        .footer-contacts a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-contacts a:hover {
+            color: #2563eb;
+        }
+
+        .footer-privacy {
+            font-size: 14px;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-privacy:hover {
+            color: #2563eb;
+        }
+
+        .footer-copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #f3f4f6;
+            text-align: center;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Background -->
+    <div class="fixed-background"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <img src="images/logo.png" alt="Кодекс Безопасности">
+                    <span class="logo-text">КОДЕКС БЕЗОПАСНОСТИ</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-desktop">
+                    <a href="#about" class="nav-link active">О НАС</a>
+                    <a href="#supervising" class="nav-link">СУПЕРВАЙЗИНГ</a>
+                    <a href="#training" class="nav-link">ОБУЧЕНИЕ</a>
+                    <a href="#risk-analysis" class="nav-link">ФАКТОРНЫЙ АНАЛИЗ РИСКОВ</a>
+                    <a href="#field-control" class="nav-link">ПОЛЕВОЙ КОНТРОЛЬ</a>
+                    <a href="#research" class="nav-link">НАУЧНО-ИССЛЕДОВАТЕЛЬСКИЙ ИНСТИТУТ</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Открыть меню">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" id="menuIcon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <nav class="nav-mobile" id="mobileNav">
+                <a href="#about">О НАС</a>
+                <a href="#supervising">СУПЕРВАЙЗИНГ</a>
+                <a href="#training">ОБУЧЕНИЕ</a>
+                <a href="#risk-analysis">ФАКТОРНЫЙ АНАЛИЗ РИСКОВ</a>
+                <a href="#field-control">ПОЛЕВОЙ КОНТРОЛЬ</a>
+                <a href="#research">НАУЧНО-ИССЛЕДОВАТЕЛЬСКИЙ ИНСТИТУТ</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Title -->
+            <h1 class="hero-title">ИННОВАЦИИ В БЕЗОПАСНОСТИ: ВАШ СПОКОЙСТВИЕ — НАША РАБОТА</h1>
+
+            <!-- Grid Layout -->
+            <div class="grid">
+                <!-- Row 1 - Visual Cards -->
+                <!-- Card 1 - People in suits -->
+                <div class="card glass-card image-card">
+                    <img src="images/4.png" alt="Профессионалы в области безопасности">
+                </div>
+
+                <!-- Card 2 - Tablet with charts -->
+                <div class="card glass-card image-card">
+                    <img src="images/5.png" alt="Цифровые решения">
+                </div>
+
+                <!-- Card 3 - Server room -->
+                <div class="card glass-card image-card">
+                    <img src="images/3.png" alt="Серверная инфраструктура">
+                </div>
+
+                <!-- Row 2 - Service Cards (White) -->
+                <!-- Card 4 - Crystal -->
+                <div class="card service-card">
+                    <div class="icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Экспертиза рисков</h3>
+                </div>
+
+                <!-- Card 5 - Shield -->
+                <div class="card service-card">
+                    <div class="icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Анализ рисков / Построение Системы</h3>
+                </div>
+
+                <!-- Card 6 - Pen -->
+                <div class="card service-card">
+                    <div class="icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Удаленный контроль / Регламенты</h3>
+                </div>
+
+                <!-- Row 3 - Technology Cards (Dark) -->
+                <!-- Card 7 - AI Solutions (wide) -->
+                <div class="card dark-card dark-card-wide">
+                    <div class="image-section">
+                        <img src="images/1.png" alt="ИИ-решения">
+                    </div>
+                    <div class="content-section">
+                        <h3>ИИ-РЕШЕНИЯ</h3>
+                        <p>Инновационные технологии искусственного интеллекта для анализа и прогнозирования рисков</p>
+                    </div>
+                </div>
+
+                <!-- Card 8 - Digital Codex -->
+                <div class="card dark-card digital-codex-card">
+                    <div class="image-container">
+                        <img src="images/2.png" alt="Цифровой Кодекс">
+                    </div>
+                    <div class="content">
+                        <h3>ЦИФРОВОЙ КОДЕКС</h3>
+                        <p>Цифровая платформа управления безопасностью</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo and Company Name -->
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Кодекс Безопасности">
+                    <span>КОДЕКС БЕЗОПАСНОСТИ</span>
+                </div>
+
+                <!-- Contacts -->
+                <div class="footer-contacts">
+                    <a href="tel:+78001234567">+7 (800) 123-45-67</a>
+                    <a href="mailto:info@kodeks-safety.ru">info@kodeks-safety.ru</a>
+                    <span>г. Москва, ул. Примерная, д. 1</span>
+                </div>
+
+                <!-- Privacy Policy -->
+                <a href="#privacy" class="footer-privacy">Политика конфиденциальности</a>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-copyright">
+                © 2025 Кодекс Безопасности. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const menuIcon = document.getElementById('menuIcon');
+            let isOpen = false;
+
+            mobileMenuBtn.addEventListener('click', function() {
+                isOpen = !isOpen;
+                
+                if (isOpen) {
+                    mobileNav.classList.add('open');
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                } else {
+                    mobileNav.classList.remove('open');
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileNav.querySelectorAll('a');
+            mobileLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    isOpen = false;
+                    mobileNav.classList.remove('open');
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
